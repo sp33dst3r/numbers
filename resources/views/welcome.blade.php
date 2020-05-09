@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
         <!-- Styles -->
         <style>
@@ -64,86 +65,64 @@
             .error{
                 color: red;
             }
+            form{
+                border: none;
+            }
         </style>
     </head>
     <body>
-        <form action="">
-            <div class="form-control">
-                <input type="text" name="numbers">
-            </div>
-            <button type="submit">Submit</button>
-
-        </form>
-
-<div class="">
-    @if (\Session::has('error'))
-        <div class="alert error">
-            {!! \Session::get('error') !!}
-
-        </div>
-    @endif
-    @if (count($cadastrs))
-    <table>
-        <thead>
-            <tr>CN</tr>
-            <tr>Адрес</tr>
-            <tr>Стоимость</tr>
-            <tr>Площадь</tr>
-        </thead>
-        <tbody>
-            @foreach ($cadastrs as $cadastr)
-                <tr>
-                    <td>{{ $cadastr->cn }}</td>
-                    <td>{{ $cadastr->address }}</td>
-                    <td>{{ $cadastr->cad_cost }}</td>
-                    <td>{{ $cadastr->area_value }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-    @else
-        I don't have any records!
-    @endif
-
-
-
-
-</div>
-
-
-        <?php /*
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+        <div class="container">
+            <h1>Получение кадастровых данных</h1>
+            <form action="">
+                <div class="form-group">
+                    <label for="numbers">Кадастровые номера</label>
+                    <input type="text" id="numbers" class="form-control" name="numbers" value="{{  app('request')->input('numbers') }}">
+                    <span>Введите кадастровые номера через запятую. Например "69:27:0000022:1306, 69:27:0000022:1307"</span>
                 </div>
-            @endif
+                <button class="btn btn-primary" type="submit">Получить данные</button>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+            </form>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+            <div class="">
+                @if (\Session::has('error'))
+                    <div class="alert error">
+                        {!! \Session::get('error') !!}
+
+                    </div>
+                @endif
+                <hr>
+                @if (count($cadastrs))
+                <div>Всего <b>{{ count($cadastrs) }}</b> записи</div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>CN</th>
+                            <th>Адрес</th>
+                            <th>Стоимость</th>
+                            <th>Площадь</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($cadastrs as $cadastr)
+                            <tr>
+                                <td>{{ $cadastr->cn }}</td>
+                                <td>{{ $cadastr->address }}</td>
+                                <td> @money($cadastr->cad_cost) </td>
+                                <td>@area($cadastr->area_value)</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                    I don't have any records!
+                @endif
+
+
+
+
             </div>
         </div>
-        */ ?>
+
+
     </body>
 </html>

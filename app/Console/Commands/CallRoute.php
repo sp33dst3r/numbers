@@ -43,14 +43,16 @@ class CallRoute extends Command
     public function handle(Request $request)
     {
 
-       // var_dump($request); die();
         $arguments = $this->argument();
         if($arguments["numbers"]) $request->merge(['numbers' => $arguments["numbers"]]);
 
         $headers = ['CN', 'Адрес', 'Стоимость', 'Площадь'];
-        $cadastrs = $this->data->getData($request);
-
-        $items = $cadastrs->toArray();
+        try{
+            $cadastrs = $this->data->getData($request);
+            $items = $cadastrs->toArray();
+        }catch(\Exception $e){
+            $items = \App\Cadastr::all(["cn", "address", "cad_cost", "area_value"])->toArray();
+        }
 
         $this->table($headers, $items);
     }

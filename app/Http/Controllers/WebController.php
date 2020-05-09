@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-//use App\Http\Controllers\CadastrController;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +12,7 @@ class WebController extends Controller
 
     public function __construct(CadastrController $data)
     {
-        // DI setting  (please watch ServiceProviders)
+        // DI setting
         $this->data = $data;
     }
 
