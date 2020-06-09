@@ -1,21 +1,11 @@
-# Получение кадастровых номеров
+Laravel REST API
 
-Скриншоты работ:
-
-http://prntscr.com/sdlegx
-
-http://prntscr.com/sdlf7g
-
-1. скачать файлы с репозитория на сервер
-2. установить зависимости (composer)
-3. в файле .env (настройки к базе)
-4. применить миграции
+1. download repo
+2. install dependencies (composer)
+3. .env (DB settings)
+4. apply migrations
 5. php artisan key:generate
-6. перейти в корневую директорию сайта (для проверки сайта с UI)
-7. Для консольной версии - следующая команда
+6. go to the root website directory (for UI)
+7. For console command checking
 php artisan route:call /fresh "69:27:0000022:1306, 69:27:0000022:1307"
-8. DI реализовано в сервис-провайдерах
-9. За работу приложения с UI отвечает Web Controller
-10. За работу консольного приложения - Console/commands/CallRoute.php
-11. Промежуточный контроллер дергающий REst - CadastrController
-12. Парсер - App Parsers класс Parser
+8. DI implemented in Service Provider
